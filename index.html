@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR CODE GENERATOR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <label for="qrtext">Enter your Text or URL</label>
+        <input type="text" name="" id="qrtext" placeholder="TEXT OR URL" required>
+        <div id="qrcont"></div>
+        <button type="button" class="btn" id="gebtn">Generate QR Code</button>
+        <a href="" class="btn" id="downbtn" download="QRCode.jpg">Download</a>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    let qrcont=document.getElementById("qrcont")
+    let qrtext=document.getElementById("qrtext")
+    let btng=document.getElementById("gebtn")
+    let downbtn=document.getElementById("downbtn")
+    let Qrimg
+    generateQr=(qrtext)=>{
+        qrcont.innerHTML=""
+        return new QRCode(qrcont, {
+    text:qrtext,
+    width: 200,
+    height: 200,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+});
+    }
+
+    downloadQR=()=>{
+  Qrimg=document.querySelector('#qrcont img')
+  let imgsrc=Qrimg.getAttribute('src')
+  console.log(imgsrc);
+  downbtn.setAttribute("href",imgsrc)
+
+    }
+    btng.addEventListener("click",(e)=>{
+let text=qrtext.value
+if(text.length>0){
+    qrcode=generateQr(text)
+    qrcont.classList.add('img-show')
+    downbtn.classList.add('down-active')
+
+}
+
+    })
+    downbtn.addEventListener("click",downloadQR)
+</script>
+</html>
